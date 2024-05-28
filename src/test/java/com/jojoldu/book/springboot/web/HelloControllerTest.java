@@ -12,7 +12,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
-@ExtendWith(SpringExtension.class) // @RunWith(SpringRunner.class) : Junit4 미만, 테스트를 진행할 때 JUnit에 내장된 실행자 외에 다른 실행자를 실행 // @ExtendWith : Junit5 이상
+@ExtendWith(SpringExtension.class) // @RunWith(SpringRunner.class) : Junit4 미만, 테스트를 진행할 때 JUnit에 내장된 실행자 외에 다른 실행자를 실행 // @ExtendWith(SpringExtension.class) : Junit5 이상
 @WebMvcTest(controllers = HelloController.class) // @WebMvcTest : 여러 스프링 테스트 어노테이션 중, Web(Spring MVC)에 집중할 수 있는 어노테이션
 public class HelloControllerTest {
 
