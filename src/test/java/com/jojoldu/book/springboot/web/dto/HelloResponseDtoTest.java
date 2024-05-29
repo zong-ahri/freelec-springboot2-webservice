@@ -15,7 +15,7 @@ public class HelloResponseDtoTest {
         HelloResponseDto dto = new HelloResponseDto(name, amount);
 
         //then
-        assertThat(dto.getName()).isEqualTo(name); // assertThat : sssertj라는 테스트 검증 라이브러리의 검증 메소드
+        assertThat(dto.getName()).isEqualTo(name); // assertThat : assertj라는 테스트 검증 라이브러리의 검증 메소드
         assertThat(dto.getAmount()).isEqualTo(amount); // isEqualTo : assertj의 동등 비교 메소드
     }
 }
