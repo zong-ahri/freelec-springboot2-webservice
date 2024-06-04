@@ -1,5 +1,6 @@
 package com.jojoldu.book.springboot.domain.posts;
 
+import com.jojoldu.book.springboot.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import jakarta.persistence.*;
 @Getter // 클래스 내 모든 필드의 Getter 메소드를 자동생성
 @NoArgsConstructor // 기본 생성자 자동 추가
 @Entity // 테이블과 링크될 클래스
-public class Posts {
+public class Posts extends BaseTimeEntity {
 
     @Id // 해당 테이블의 PK 필드
     @GeneratedValue(strategy = GenerationType.IDENTITY) // PK의 생성 규칙, 스프링 부트 2.0 에서는 GenerationType.IDENTITY 옵션을 추가해야만 auto_increment가 됨
@@ -24,7 +25,7 @@ public class Posts {
     private String author;
 
     @Builder // 해당 클래스의 빌더 패턴 클래스를 생성
-    public Posts(String title, String content, String author) {
+    public Posts (String title, String content, String author) {
         this.title = title;
         this.content = content;
         this.author = author;
@@ -34,4 +35,5 @@ public class Posts {
         this.title = title;
         this.content = content;
     }
+
 }
