@@ -1,6 +1,4 @@
 .gradle
-application-oauth.properties
-
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
