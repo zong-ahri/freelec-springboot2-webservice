@@ -1,9 +1,13 @@
 package com.jojoldu.book.springboot.web;
 
+import com.jojoldu.book.springboot.config.auth.SecurityConfig;
 import org.junit.jupiter.api.Test; // import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith; // import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension; // import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -13,13 +17,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @ExtendWith(SpringExtension.class) // @RunWith(SpringRunner.class) : Junit4 미만, 테스트를 진행할 때 JUnit에 내장된 실행자 외에 다른 실행자를 실행 // @ExtendWith(SpringExtension.class) : Junit5 이상
-@WebMvcTest(controllers = HelloController.class) // @WebMvcTest : 여러 스프링 테스트 어노테이션 중, Web(Spring MVC)에 집중할 수 있는 어노테이션
+@WebMvcTest(controllers = HelloController.class, excludeFilters = {@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)}) // @WebMvcTest : 여러 스프링 테스트 어노테이션 중, Web(Spring MVC)에 집중할 수 있는 어노테이션
 public class HelloControllerTest {
 
     @Autowired // @Autowired : 스프링이 관리하는 빈(Bean)을 주입 받음
     private MockMvc mvc; // private MockMvc mvc : 웹 API를 테스트할 때 사용, 스프링 MVC 테스트의 시작점
 
     @Test
+    @WithMockUser(roles = "USER")
     public void hello가_리턴된다() throws Exception {
         String hello = "hello";
 
@@ -29,6 +34,7 @@ public class HelloControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     public void helloDto가_리턴된다() throws Exception {
         String name = "hello";
         int amount = 1000;

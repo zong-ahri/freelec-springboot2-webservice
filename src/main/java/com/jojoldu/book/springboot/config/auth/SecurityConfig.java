@@ -4,6 +4,7 @@ import com.jojoldu.book.springboot.domain.user.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
@@ -31,6 +32,8 @@ public class SecurityConfig {
                 .oauth2Login((oauth2) -> oauth2 // oauth2Login : OAuth2 로그인 기능에 대한 여러 설정의 진입점
                         .userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint // userInfoEndpoint : OAuth2 로그인 성공 이후 사용자 정보를 가져올 때의 설정들을 담당
                                 .userService(customOAuth2UserService))); // userService : 소셜 로그인 성공 시 후속 조치를 진행할 UserService 인터페이스의 구현체를 등록
+
+//                .oauth2Login(Customizer.withDefaults());
 
         return http.build();
     }
