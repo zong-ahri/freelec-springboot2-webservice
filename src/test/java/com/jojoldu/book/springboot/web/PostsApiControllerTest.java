@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -28,7 +27,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
@@ -77,18 +75,14 @@ public class PostsApiControllerTest {
 
 //        String url = "http://localhost:" + port + "/api/v1/posts";
         String url = "/api/v1/posts";
-        System.out.println("print");
 
         // when
         String jsonContent = new ObjectMapper().writeValueAsString(requestDto); // DTO 객채를 JSON 문자열로 변환
-        System.out.println("print"+jsonContent);
 
-        mvc.perform(post(url) // 생성된 MockMvc를 통해 API를 테스트
+        mvc.perform(MockMvcRequestBuilders.post(url) // 생성된 MockMvc를 통해 API를 테스트
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonContent))
                 .andExpect(status().isOk());
-        System.out.println("print"+jsonContent);
-
 
         // then
         List<Posts> all = postsRepository.findAll();
