@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class PostsApiControllerTest {
 
 //    @LocalServerPort
-    private int port;
+//    private int port;
 
     @Autowired
     private PostsRepository postsRepository;
