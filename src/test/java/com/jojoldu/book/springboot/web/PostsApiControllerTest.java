@@ -30,12 +30,12 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+//@SpringBootTest
 @AutoConfigureMockMvc
 public class PostsApiControllerTest {
 
-//    @LocalServerPort
+    @LocalServerPort
     private int port;
 
     @Autowired
@@ -73,8 +73,8 @@ public class PostsApiControllerTest {
                 .author("author")
                 .build();
 
-//        String url = "http://localhost:" + port + "/api/v1/posts";
-        String url = "/api/v1/posts";
+        String url = "http://localhost:" + port + "/api/v1/posts";
+//        String url = "/api/v1/posts";
 
         // when
         String jsonContent = new ObjectMapper().writeValueAsString(requestDto); // DTO 객채를 JSON 문자열로 변환
@@ -112,8 +112,8 @@ public class PostsApiControllerTest {
                 .content(expectedContent)
                 .build();
 
-//        String url = "http://localhost:" + port + "/api/v1/posts/" + updateId;
-        String url = "/api/v1/posts/" + updateId;
+        String url = "http://localhost:" + port + "/api/v1/posts/" + updateId;
+//        String url = "/api/v1/posts/" + updateId;
 
         // when
         String jsonContent = new ObjectMapper().writeValueAsString(requestDto);
