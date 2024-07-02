@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -19,6 +20,7 @@ import org.springframework.http.*;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -27,15 +29,15 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-//@AutoConfigureMockMvc
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest
+@AutoConfigureMockMvc
 public class PostsApiControllerTest {
 
-    @LocalServerPort
+//    @LocalServerPort
     private int port;
 
     @Autowired
@@ -44,6 +46,7 @@ public class PostsApiControllerTest {
     @Autowired
     private WebApplicationContext context;
 
+    @Autowired
     private MockMvc mvc;
 
     @BeforeEach
@@ -72,19 +75,24 @@ public class PostsApiControllerTest {
                 .author("author")
                 .build();
 
-        String url = "http://localhost:" + port + "/api/v1/posts";
+//        String url = "http://localhost:" + port + "/api/v1/posts";
+        String url = "/api/v1/posts";
+        System.out.println("print");
 
         // when
-        String jsonContent = new ObjectMapper().writeValueAsString(requestDto);
+        String jsonContent = new ObjectMapper().writeValueAsString(requestDto); // DTO 객채를 JSON 문자열로 변환
+        System.out.println("print"+jsonContent);
 
         mvc.perform(post(url) // 생성된 MockMvc를 통해 API를 테스트
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonContent))
                 .andExpect(status().isOk());
+        System.out.println("print"+jsonContent);
 
 
         // then
         List<Posts> all = postsRepository.findAll();
+        System.out.println("print" + all.get(0).getTitle() + all.get(0).getContent());
         assertThat(all.get(0).getTitle()).isEqualTo(title);
         assertThat(all.get(0).getContent()).isEqualTo(content);
 
@@ -110,11 +118,12 @@ public class PostsApiControllerTest {
                 .content(expectedContent)
                 .build();
 
-        String url = "http://localhost:" + port + "/api/v1/posts/" + updateId;
+//        String url = "http://localhost:" + port + "/api/v1/posts/" + updateId;
+        String url = "/api/v1/posts/" + updateId;
 
         // when
         String jsonContent = new ObjectMapper().writeValueAsString(requestDto);
-        mvc.perform(put(url) // 생성된 MockMvc를 통해 API를 테스트
+        mvc.perform(MockMvcRequestBuilders.put(url) // 생성된 MockMvc를 통해 API를 테스트
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonContent))
                 .andExpect(status().isOk());
